@@ -1,0 +1,54 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "modules": false,
+      "targets": "> 1%, not dead"
+    }]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    ["@babel/plugin-transform-runtime", {
+      "helpers": true,
+      "regenerator": true,
+      "useESModules": false
+    }] // polyfill新语法
+  ],
+  "env": {
+    "cj": {
+      "presets": [
+        "@babel/preset-react",
+        ["@babel/preset-env", {
+          "modules": false,
+          "targets": "> 1%, not dead"
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-object-rest-spread",
+        ["@babel/plugin-transform-runtime", {
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false
+        }] // polyfill新语法
+      ]
+    },
+    "test": {
+      "presets": [
+        "@babel/preset-react",
+        ["@babel/preset-env", {
+          "modules": "commonjs",
+          "targets": "> 1%, not dead"
+        }]
+      ],
+      "plugins": [
+        "@babel/plugin-proposal-object-rest-spread",
+        ["@babel/plugin-transform-runtime", {
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false
+        }] // polyfill新语法
+      ]
+    }
+  }
+}
