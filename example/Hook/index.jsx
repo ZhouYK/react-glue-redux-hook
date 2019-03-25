@@ -37,9 +37,19 @@ const App = (props) => {
   const handlePet = useMemo(() => changeFactory(petUpdater), [petUpdater]);
   return (
     <div className="app">
-      <Link to="/test">
-        跳转测试
-      </Link>
+      <ul>
+        <lt>
+          <h3>
+            当前为hook模式
+          </h3>
+        </lt>
+        <li>
+          可以查看：
+          <Link to="/classic">
+            经典的connect模式
+          </Link>
+        </li>
+      </ul>
       <span>
         { props.test }
       </span>

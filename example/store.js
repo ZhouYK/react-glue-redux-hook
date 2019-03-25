@@ -8,11 +8,12 @@ import { destruct } from '../src';
 
 const modelSchemas = { app, book };
 const store = createStore(() => {}, {}, DevTool().instrument());
-const { reducers, useGlue } = destruct(store)(modelSchemas);
+const { reducers, useGlue, connect } = destruct(store)(modelSchemas);
 store.replaceReducer(combineReducers(reducers));
 
 export {
   store,
   useGlue,
+  connect,
   modelSchemas,
 };

@@ -11,6 +11,7 @@ type modelState = any;
 interface DestructResult {
   reducers: ReducersMapObject,
   useGlue: (model: Glue) => [modelState],
+  connect: (model: Glue) => (component: ComponentType<any> | PureComponent<any, any, any>) => ComponentType,
   referToState: (model: Glue) => any,
 }
 

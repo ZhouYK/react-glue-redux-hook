@@ -58,7 +58,8 @@ module.exports = {
     "react/destructuring-assignment": "warn",
     "global-require": 0,
     "react/sort-comp": 0,
-    "no-param-reassign": 0
+    "no-param-reassign": 0,
+    "max-len": ["warn", 200]
   },
   "extends": "airbnb",
 }

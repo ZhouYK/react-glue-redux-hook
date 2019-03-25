@@ -1,34 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import getType from './getType';
 
-const hooks = store => ({ referToState, hasModel }) => {
-  const callbackQueue = [];
-  store.subscribe(() => {
-    callbackQueue.forEach((fn) => {
-      fn();
-    });
-  });
-  const traverse = (handler) => {
-    const traverseFn = (node) => {
-      if (hasModel(node)) {
-        return handler(node);
-      }
-      if (getType(node) === '[object Object]') {
-        const result = {};
-        Object.keys(node).forEach((key) => {
-          result[key] = traverseFn(node[key]);
-        });
-        return result;
-      }
-      if (process.env.NODE_ENV === 'development') {
-        // 未知节点的值会返回undefined
-        console.warn(`the node "${node}" in schema has not be tracked in the store`);
-      }
-      return undefined;
-    };
-    return traverseFn;
-  };
-
+const hooks = (store, callbackQueue) => ({ referToState }) => ({ traverse }) => {
   // 计算state
   const getInitState = (modelSchemas, cacheStateMap) => traverse((node) => {
     const result = referToState(node);

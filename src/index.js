@@ -1,12 +1,13 @@
 import { destruct as dst, gluer } from 'glue-redux';
-import hooks from './hooks';
+import bridge from './bridge';
 
 export const destruct = store => (model) => {
   const { reducers, referToState, hasModel } = dst(store)(model);
-  const useGlue = hooks(store)({ hasModel, referToState });
+  const { useGlue, connect } = bridge(store)({ hasModel, referToState });
   return {
     reducers,
     useGlue,
+    connect,
     referToState,
   };
 };

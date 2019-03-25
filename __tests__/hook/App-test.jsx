@@ -1,5 +1,5 @@
-import { renderHook, cleanup, act } from 'react-hooks-testing-library'
-import { useGlue, modelSchemas } from '../example/store';
+import { renderHook, cleanup, act } from 'react-hooks-testing-library';
+import { useGlue, modelSchemas } from '../../example/store';
 
 afterEach(cleanup);
 
