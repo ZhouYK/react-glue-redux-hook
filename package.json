@@ -109,7 +109,7 @@
     "action",
     "reducer"
   ],
-  "repository": "https://github.com/ZhouYK/react-glux.git",
+  "repository": "https://github.com/ZhouYK/react-glue-redux-hook.git",
   "author": "ink",
   "license": "MIT",
   "dependencies": {
