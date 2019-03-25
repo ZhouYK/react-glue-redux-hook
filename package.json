@@ -111,5 +111,8 @@
   ],
   "repository": "https://github.com/ZhouYK/react-glux.git",
   "author": "ink",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@babel/runtime-corejs2": "^7.4.2"
+  }
 }
