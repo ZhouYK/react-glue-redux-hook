@@ -1,76 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pt from 'prop-types';
-import { connect } from '../../store';
-import model from '../../models/app/model';
+import { useGlue, modelSchemas } from '../../store';
 
-class Index extends Component {
-  static propTypes = {
-    users: pt.array.isRequired,
-    test: pt.string,
-  }
-
-  static defaultProps = {
-    test: 'userlist component',
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return true;
-  }
-
-  renderUsers = () => {
-    const { users } = this.props;
-    if (Object.is(users.length, 0)) {
-      return (
-        <section>
-          no users
-        </section>
-      );
-    }
-    const list = users.map((user, index) => (
-      /* eslint-disable react/no-array-index-key */
-      <section
-        key={index}
-      >
-        <div className="row">
-          <h4>
-            user
-            {' '}
-            {index}
-            :
-          </h4>
-          <p>
-            name:
-            {user.name}
-          </p>
-          <p>
-            profession：
-            {user.profession}
-          </p>
-          <p>
-            pet:
-            {user.pet}
-          </p>
-        </div>
-      </section>
-    ));
-    return list;
-  }
-
-  render() {
+const renderUsers = (users) => {
+  if (Object.is(users.length, 0)) {
     return (
       <section>
-        <span>
-          { this.props.test }
-        </span>
-        { this.renderUsers() }
+        no users
       </section>
     );
   }
-}
-export { Index };
-export default connect({ ...model, test: 1 })(Index);
+  const list = users.map((user, index) => (
+    /* eslint-disable react/no-array-index-key */
+    <section
+      key={index}
+    >
+      <div className="row">
+        <h4>
+          user
+          {' '}
+          {index}
+          :
+        </h4>
+        <p>
+          name:
+          {user.name}
+        </p>
+        <p>
+          profession：
+          {user.profession}
+        </p>
+        <p>
+          pet:
+          {user.pet}
+        </p>
+      </div>
+    </section>
+  ));
+  return list;
+};
+
+const Index = (props) => {
+  const [modelState] = useGlue(modelSchemas.app);
+  return (
+    <section>
+      <span>
+        { props.test }
+      </span>
+      { renderUsers(modelState.users) }
+    </section>
+  );
+};
+
+Index.propTypes = {
+  test: pt.string,
+};
+
+Index.defaultProps = {
+  test: 'userList component',
+};
+
+export default Index;

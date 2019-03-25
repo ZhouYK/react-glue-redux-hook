@@ -4,13 +4,15 @@ import {
 import app from './models/app/model';
 import book from './models/book/model';
 import DevTool from './DevTool';
-import { destruct } from '../src/index';
+import { destruct } from '../src';
 
+const modelSchemas = { app, book };
 const store = createStore(() => {}, {}, DevTool().instrument());
-const { reducers, connect } = destruct(store)({ app, book });
+const { reducers, useGlue } = destruct(store)(modelSchemas);
 store.replaceReducer(combineReducers(reducers));
 
 export {
   store,
-  connect,
+  useGlue,
+  modelSchemas,
 };

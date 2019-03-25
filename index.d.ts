@@ -6,9 +6,11 @@ interface Glue {
   [index:string]: any;
 }
 
+type modelState = any;
+
 interface DestructResult {
   reducers: ReducersMapObject,
-  connect: (model: Glue) => (component: ComponentType<any> | PureComponent<any, any, any>) => ComponentType,
+  useGlue: (model: Glue) => [modelState],
   referToState: (model: Glue) => any,
 }
 
@@ -32,6 +34,5 @@ interface Destruct {
   (p: DestructParams): DestructReturn;
 }
 
-export const destruct:Destruct;
-
 export { gluer };
+export const destruct:Destruct;

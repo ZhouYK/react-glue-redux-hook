@@ -1,17 +1,16 @@
-# react-glue-redux
+# react-glue-redux-hook
 
-glue-redux的连接库
-> 基于glue-redux的react连接库
+glue-redux的连接库（hook版本）
+> 像使用组件状态一样使用redux
 
 ## 安装
 ```bash
-npm i react-glue-redux -P
-# 包原名为react-glux，1.3.1版本后react-glux改名为react-glue-redux
+npm i react-glue-redux-hoos -P
 ```
 
 ## 查看示例
 ```bash
-git clone https://github.com/ZhouYK/react-glux.git
+git clone https://github.com/ZhouYK/react-glue-redux-hook.git
 npm install
 npm start
 
@@ -30,13 +29,13 @@ npm start
   > 自定义的数据对象，必须是plain object
   
 ### 返回
-- { reducers, connect }
+- { reducers, useGlue }
   > 包含reducers和connect属性的对象
   
    - reducers
       > redux中的reducer函数的对象集合，可直接用于combineReducers
-   - connect [代码](https://github.com/ZhouYK/react-glux/blob/master/example/App/UserList.jsx)
-      > HOC---链接store与组件，帮助组件实时获取数据，向组件注入数据
+   - useGlue
+      > react hook，通过它来获取最新的redux的state
 
 ### 如何使用
 ```js
@@ -44,25 +43,26 @@ npm start
   import {
     createStore, combineReducers,
   } from 'redux';
-  import app from './model';
-  import { destruct } from 'react-glue-redux';
+  import app from './models/app/model';
+  import book from './models/book/model';
+  import DevTool from './DevTool';
+  import { destruct } from '../src';
   
-  const store = createStore(() => {});
-  const { reducers, connect } = destruct(store)({ app });
+  const modelSchemas = { app, book };
+  const store = createStore(() => {}, {}, DevTool().instrument());
+  const { reducers, useGlue } = destruct(store)(modelSchemas);
   store.replaceReducer(combineReducers(reducers));
   
   export {
     store,
-    connect, // 导出连接React组件的HOC
+    useGlue,
+    modelSchemas,
   };
 
 ```
-### connect(model)(Component)
+### useGlue(model: glue)
 * model
 > 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
-
-* Component
-> react组件
 
 ### 如何使用
 
@@ -70,7 +70,7 @@ npm start
 
 ```js
  // model.js
- import { gluer } from 'glue-redux';
+ import { gluer } from 'react-glue-redux-hook';
  
  const users = gluer((data, state) => [data, ...state], []);
  
@@ -84,35 +84,74 @@ npm start
 * 在组件中注入数据
 
 ```jsx
-  // UserList.jsx
-  import React, { Component } from 'react';
+  import React from 'react';
   import pt from 'prop-types';
-  import { connect } from './store';
-  import model from './model';
+  import { useGlue, modelSchemas } from '../../store';
   
-  class UserList extends Component {
-    static propTypes = {
-      users: pt.array.isRequired,
-    }
-  
-    renderUsers = () => {
-     ...
-    }
-  
-    render() {
+  const renderUsers = (users) => {
+    if (Object.is(users.length, 0)) {
       return (
         <section>
-          { this.renderUsers() }
+          no users
         </section>
       );
     }
-  }
+    const list = users.map((user, index) => (
+      /* eslint-disable react/no-array-index-key */
+      <section
+        key={index}
+      >
+        <div className="row">
+          <h4>
+            user
+            {' '}
+            {index}
+            :
+          </h4>
+          <p>
+            name:
+            {user.name}
+          </p>
+          <p>
+            profession：
+            {user.profession}
+          </p>
+          <p>
+            pet:
+            {user.pet}
+          </p>
+        </div>
+      </section>
+    ));
+    return list;
+  };
   
-  export default connect(model)(UserList);// model的结构为{ users }，注入组件的属性则为this.props.users
+  const Index = (props) => {
+    // 获取redux中的state
+    const [modelState] = useGlue(modelSchemas.app);
+    return (
+      <section>
+        <span>
+          { props.test }
+        </span>
+        { renderUsers(modelState.users) }
+      </section>
+    );
+  };
+  
+  Index.propTypes = {
+    test: pt.string,
+  };
+  
+  Index.defaultProps = {
+    test: 'userList component',
+  };
+  
+  export default Index;
 
 ```
 ## Author
 [ZhouYK](https://github.com/ZhouYK)
 
 ## License
-[MIT licensed](https://github.com/ZhouYK/react-glux/blob/master/LICENSE) 
+[MIT licensed](https://github.com/ZhouYK/react-glue-redux-hook/blob/master/LICENSE) 
