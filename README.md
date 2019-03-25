@@ -50,19 +50,29 @@ npm start
   
   const modelSchemas = { app, book };
   const store = createStore(() => {}, {}, DevTool().instrument());
-  const { reducers, useGlue } = destruct(store)(modelSchemas);
+  const { reducers, useGlue, connect } = destruct(store)(modelSchemas);
   store.replaceReducer(combineReducers(reducers));
   
   export {
     store,
     useGlue,
+    connect,
     modelSchemas,
   };
 
 ```
 ### useGlue(model: glue)
+> function component可使用
 * model
 > 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
+
+### connect(model: glue)(Component: ReactComponent)
+> 所有component都可以使用
+* model
+> 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
+
+* Component
+> react组件
 
 ### 如何使用
 
@@ -81,7 +91,7 @@ npm start
 
 ```
 
-* 在组件中注入数据
+* 在组件中注入数据（hook模式）
 
 ```jsx
   import React from 'react';
@@ -150,6 +160,36 @@ npm start
   export default Index;
 
 ```
+* 在组件中注入数据（connect模式）
+
+```jsx
+  // UserList.jsx
+  import React, { Component } from 'react';
+  import pt from 'prop-types';
+  import { connect } from './store';
+  import model from './model';
+  
+  class UserList extends Component {
+    static propTypes = {
+      users: pt.array.isRequired,
+    }
+  
+    renderUsers = () => {
+     ...
+    }
+  
+    render() {
+      return (
+        <section>
+          { this.renderUsers() }
+        </section>
+      );
+    }
+  }
+  
+  export default connect(model)(UserList);// model的结构为{ users }，注入组件的属性则为this.props.users
+```
+
 ## Author
 [ZhouYK](https://github.com/ZhouYK)
 

@@ -7,3 +7,9 @@
 ```
 1，输出commonjs模块打包
 ```
+
+- 0.1.0
+
+```
+1，考虑到项目中可能使用class component，将react-glue-redux中的connect迁移进来了
+```
