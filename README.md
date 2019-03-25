@@ -29,13 +29,15 @@ npm start
   > 自定义的数据对象，必须是plain object
   
 ### 返回
-- { reducers, useGlue }
+- { reducers, useGlue, connect }
   > 包含reducers和connect属性的对象
   
    - reducers
       > redux中的reducer函数的对象集合，可直接用于combineReducers
    - useGlue
       > react hook，通过它来获取最新的redux的state
+   - connect
+      > HOC---链接store与组件，帮助组件实时获取数据，向组件注入数据
 
 ### 如何使用
 ```js
