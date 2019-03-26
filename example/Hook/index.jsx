@@ -38,11 +38,11 @@ const App = (props) => {
   return (
     <div className="app">
       <ul>
-        <lt>
+        <li>
           <h3>
             当前为hook模式
           </h3>
-        </lt>
+        </li>
         <li>
           可以查看：
           <Link to="/classic">

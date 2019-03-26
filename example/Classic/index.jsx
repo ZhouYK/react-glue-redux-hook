@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import service from '../models/app/service';
 import List from './UserList/index';
@@ -8,19 +7,26 @@ import './style.less';
 class App extends Component {
   static propTypes = {
     test: PropTypes.string,
+    history: PropTypes.object.isRequired,
   }
 
   static defaultProps = {
     test: 'app component',
   }
 
+
   constructor(props) {
     super(props);
+    this.jump = this.jump.bind(this);
     this.state = {
       name: '',
       profession: '',
       pet: '',
     };
+  }
+
+  jump() {
+    this.props.history.push('/hook');
   }
 
   shouldComponentUpdate() {
@@ -62,16 +68,16 @@ class App extends Component {
     return (
       <div className="app">
         <ul>
-          <lt>
+          <li>
             <h3>
               当前为connect模式
             </h3>
-          </lt>
+          </li>
           <li>
             可以查看：
-            <Link to="/hook">
+            <button type="button" onClick={this.jump}>
               最新的Hook模式
-            </Link>
+            </button>
           </li>
         </ul>
         <span>

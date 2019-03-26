@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 import App from '../../example/Classic';
 import UserListHOC, { Index as UserList } from '../../example/Classic/UserList';
 import bookModel from '../../example/models/book/model';
