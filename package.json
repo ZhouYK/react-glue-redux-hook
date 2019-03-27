@@ -1,6 +1,6 @@
 {
   "name": "react-glue-redux-hook",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "use redux through hooks",
   "main": "./cj/index.js",
   "types": "./index.d.ts",
@@ -107,7 +107,9 @@
     "redux",
     "glue-redux",
     "action",
-    "reducer"
+    "reducer",
+    "react",
+    "react hooks"
   ],
   "repository": "https://github.com/ZhouYK/react-glue-redux-hook.git",
   "author": "ink",
