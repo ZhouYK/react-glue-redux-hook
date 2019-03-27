@@ -1,4 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
+import {
+  useState, useEffect, useMemo, useCallback,
+} from 'react';
 
 const hooks = (store, callbackQueue) => ({ referToState }) => ({ traverse }) => {
   // 计算state
@@ -23,7 +25,7 @@ const hooks = (store, callbackQueue) => ({ referToState }) => ({ traverse }) => 
   })(modelSchemas);
 
   return (modelSchemas) => {
-    const initialGlobalState = useMemo(() => store.getState(), [modelSchemas]);
+    const initialGlobalState = useMemo(() => store.getState(), []);
     const [globalState, globalStateUpdater] = useState(initialGlobalState);
     const [updated] = useState({
       flag: true,
@@ -33,27 +35,28 @@ const hooks = (store, callbackQueue) => ({ referToState }) => ({ traverse }) => 
     // 缓存map
     const [cacheStateMap] = useState(new Map());
     // 初始state
-    const initialState = useMemo(() => getInitState(modelSchemas, cacheStateMap), [modelSchemas]);
+    const initialState = useMemo(() => getInitState(modelSchemas, cacheStateMap), [cacheStateMap, modelSchemas]);
     const [state, stateUpdater] = useState(initialState);
-    useEffect(() => {
-      const subscribeFn = () => {
-        const currentState = store.getState();
-        if (Object.is(globalState, currentState)) {
-          return;
-        }
-        globalStateUpdater(currentState);
-        const data = calcState(modelSchemas, cacheStateMap, updated);
-        if (updated.flag) {
-          stateUpdater(data);
-        }
-      };
+    // store更新的回调
+    const subscribeFn = useCallback(() => {
+      const currentState = store.getState();
+      if (Object.is(globalState, currentState)) {
+        return;
+      }
+      globalStateUpdater(currentState);
+      const data = calcState(modelSchemas, cacheStateMap, updated);
+      if (updated.flag) {
+        stateUpdater(data);
+      }
+    }, []);
+    if (!callbackQueue.includes(subscribeFn)) {
       callbackQueue.push(subscribeFn);
-      return () => {
-        const num = callbackQueue.indexOf(subscribeFn);
-        if (num !== -1) {
-          callbackQueue.splice(num, 1);
-        }
-      };
+    }
+    useEffect(() => () => {
+      const num = callbackQueue.indexOf(subscribeFn);
+      if (num !== -1) {
+        callbackQueue.splice(num, 1);
+      }
     }, []);
     return [state];
   };
