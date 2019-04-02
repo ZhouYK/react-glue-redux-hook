@@ -69,7 +69,8 @@ npm start
 
 ```
 
-<strong>👆在生成store过程中衍生出来的方法，这些方法也会在将来用到</strong>
+
+<strong>在生成store过程中衍生出来的方法👆，这些方法👇也会在将来用到</strong>
 
 #### useGlue(model: glue)
 > function component可使用
