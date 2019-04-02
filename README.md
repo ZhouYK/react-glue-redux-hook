@@ -44,7 +44,7 @@ npm start
    - connect
       > HOC---链接store与组件，帮助组件实时获取数据，向组件注入数据
 
-#### 如何使用
+#### 使用destruct
 ```js
   // store.js
   import {
@@ -85,7 +85,7 @@ npm start
 * Component
 > react组件
 
-### 如何使用
+## 完整的使用栗子
 
 * 先定义数据模型
 
@@ -99,6 +99,32 @@ npm start
    users,
  };
  export default app;
+
+```
+
+* 生成store
+
+```js
+  // store.js
+  import {
+    createStore, combineReducers,
+  } from 'redux';
+  import app from './models/app/model';
+  import book from './models/book/model';
+  import DevTool from './DevTool';
+  import { destruct } from '../src';
+  
+  const modelSchemas = { app, book };
+  const store = createStore(() => {}, {}, DevTool().instrument());
+  const { reducers, useGlue, connect } = destruct(store)(modelSchemas);
+  store.replaceReducer(combineReducers(reducers));
+  
+  export {
+    store,
+    useGlue,
+    connect,
+    modelSchemas,
+  };
 
 ```
 
