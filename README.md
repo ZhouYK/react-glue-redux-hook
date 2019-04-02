@@ -13,7 +13,7 @@ glue-redux的连接库（hook版本）
 
 ## 安装
 ```bash
-npm i react-glue-redux-hoos -P
+npm i react-glue-redux-hook -P
 ```
 
 ## 查看示例
