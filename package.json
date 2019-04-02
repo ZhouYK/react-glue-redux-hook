@@ -5,13 +5,15 @@
   "main": "./cj/index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest && codecov -t 560e8e65-14e5-43dc-bafa-60ddf920aa2f",
     "start": "webpack-dev-server --config webpack/webpack.config.dev.js",
     "build:es": "babel src --out-dir es",
     "build:cj": "cross-env BABEL_ENV=cj babel src --out-dir cj",
     "build": "webpack --config webpack/webpack.config.prod.js && npm run build:es && npm run build:cj"
   },
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "verbose": true,
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
@@ -51,6 +53,7 @@
     "babel-jest": "~23.6.0",
     "babel-loader": "~7.1.4",
     "clean-webpack-plugin": "~0.1.19",
+    "codecov": "^3.2.0",
     "cross-env": "~5.2.0",
     "css-loader": "~0.28.11",
     "enzyme": "^3.9.0",

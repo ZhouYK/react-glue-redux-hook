@@ -8,3 +8,4 @@ stat.json
 es/
 cj/
 .npmrc
+coverage/
