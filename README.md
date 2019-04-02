@@ -24,19 +24,16 @@ npm start
 
 然后访问 http://localhost:8888
 ```
+## API
+### destruct(store)(model) | [代码](https://github.com/ZhouYK/react-glux/blob/master/example/configStore.js)
 
-## Api
-* destruct
-
-## destruct(store)(model) | [代码](https://github.com/ZhouYK/react-glux/blob/master/example/configStore.js)
-
-### 入参
+#### 入参
 - store(必传)
   > redux的生成的store对象
 - model(必传)
   > 自定义的数据对象，必须是plain object
   
-### 返回
+#### 返回
 - { reducers, useGlue, connect }
   > 包含reducers和connect属性的对象
   
@@ -47,7 +44,7 @@ npm start
    - connect
       > HOC---链接store与组件，帮助组件实时获取数据，向组件注入数据
 
-### 如何使用
+#### 如何使用
 ```js
   // store.js
   import {
@@ -71,12 +68,16 @@ npm start
   };
 
 ```
-### useGlue(model: glue)
+
+在生成store中衍生出来的方法
+---
+
+#### useGlue(model: glue)
 > function component可使用
 * model
 > 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
 
-### connect(model: glue)(Component: ReactComponent)
+#### connect(model: glue)(Component: ReactComponent)
 > 所有component都可以使用
 * model
 > 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
