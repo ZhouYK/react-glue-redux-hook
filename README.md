@@ -69,8 +69,7 @@ npm start
 
 ```
 
-在生成store中衍生出来的方法
----
+<strong>👆在生成store过程中衍生出来的方法，这些方法也会在将来用到</strong>
 
 #### useGlue(model: glue)
 > function component可使用
@@ -84,6 +83,7 @@ npm start
 
 * Component
 > react组件
+
 
 ## 完整的使用栗子
 
