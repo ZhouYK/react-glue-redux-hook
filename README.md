@@ -8,7 +8,7 @@
 
 # react-glue-redux-hook
 
-glue-redux的连接库（hook版本）
+glue-redux的连接库（包含HOC和hook两种方式）
 > 像使用组件状态一样使用redux
 
 ## 安装
@@ -25,24 +25,23 @@ npm start
 然后访问 http://localhost:8888
 ```
 ## API
-### destruct(store)(model) | [代码](https://github.com/ZhouYK/react-glux/blob/master/example/configStore.js)
+### destruct(store)(models) | [代码](https://github.com/ZhouYK/react-glux/blob/master/example/configStore.js)
 
 #### 入参
-- store(必传)
-  > redux的生成的store对象
-- model(必传)
-  > 自定义的数据对象，必须是plain object
+
+| 参数名 | 类型 | 用途 | 示例
+| :----: | :----: | :----: | :----:
+| store | object(redux的store) | 耦合数据模型 | -
+| models | object | 数据模型 | { [index: string]: GluerReturn or any }
   
 #### 返回
 - { reducers, useGlue, connect }
-  > 包含reducers和connect属性的对象
-  
-   - reducers
-      > redux中的reducer函数的对象集合，可直接用于combineReducers
-   - useGlue
-      > react hook，通过它来获取最新的redux的state
-   - connect
-      > HOC---链接store与组件，帮助组件实时获取数据，向组件注入数据
+
+| 属性名 | 类型 | 用途 | 示例 
+| :----: | :----: | :----: | :----:
+| reducers | object | reducer组成的对象 | { name: (state, action) => {}, ... } 
+| useGlue | function | 自定义hook | useGlue(model)
+| connect | function | HOC | connect(model)(Component)
 
 #### 使用destruct
 ```js
@@ -68,24 +67,6 @@ npm start
   };
 
 ```
-
-
-<strong>在生成store过程中衍生出来的方法👆，这些方法👇也会在将来用到</strong>
-
-#### useGlue(model: glue)
-> function component可使用
-* model
-> 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
-
-#### connect(model: glue)(Component: ReactComponent)
-> 所有component都可以使用
-* model
-> 必须是对象，从state拿到的数据将以该对象的展开结构注入组件
-
-* Component
-> react组件
-
-
 ## 完整的使用栗子
 
 * 先定义数据模型
