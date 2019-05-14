@@ -5,7 +5,8 @@
   "main": "./cj/index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "jest && codecov -t 560e8e65-14e5-43dc-bafa-60ddf920aa2f",
+    "codecov": "codecov -t 560e8e65-14e5-43dc-bafa-60ddf920aa2f",
+    "test": "jest",
     "start": "webpack-dev-server --config webpack/webpack.config.dev.js",
     "build:es": "babel src --out-dir es",
     "build:cj": "cross-env BABEL_ENV=cj babel src --out-dir cj",
@@ -65,7 +66,7 @@
     "eslint-plugin-jsx-a11y": "~6.0.3",
     "eslint-plugin-react": "~7.10.0",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "glue-redux": "^3.5.4",
+    "glue-redux": "^3.6.0-alpha.0",
     "html-webpack-plugin": "~3.2.0",
     "jest": "~23.6.0",
     "less": "~3.0.4",
